@@ -1,1091 +1,281 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شاليهات أشرقت - الإيجار الفاخر</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <title>شاليهات أشرقت - مرسى مطروح</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Droid Arabic Kufi', 'Arial', sans-serif;
-        }
-
-        /* تعريف الألوان والثوابت */
-        :root {
-            --primary-color: #A0522D; /* بني داكن/طوبي */
-            --accent-color: #FF9800; /* برتقالي ساطع */
-            --background-light: #FBF8F4; /* خلفية خفيفة */
-            --card-background: #ffffff;
-            --text-dark: #333333;
-            --text-light: #777777;
-            --shadow-pro: 0 6px 15px rgba(0, 0, 0, 0.1);
-            --header-height: 80px; 
-        }
-
-        body {
-            background-color: var(--background-light);
-            direction: rtl;
-            color: var(--text-dark);
-            line-height: 1.6;
-            padding-top: var(--header-height); /* مساحة للهيدر الثابت */
-        }
-
-        /* تنسيقات الهيدر الثابت */
-        .sticky-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: var(--header-height);
-        }
+        :root { --primary: #A0522D; --accent: #FF9800; --dark: #333; --light-bg: #FBF8F4; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--light-bg); color: var(--dark); line-height: 1.6; padding-top: 110px; }
         
-        .logo-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        /* الهيدر الثابت */
+        .sticky-header { position: fixed; top: 0; width: 100%; background: var(--primary); color: white; padding: 10px 5%; z-index: 1001; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-area img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; }
+        .contact-group { display: flex; flex-direction: column; gap: 2px; text-align: left; }
+        .contact-group a { color: white; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
 
-        .logo-title img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .logo-title h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        .contact-info {
-            display: flex;
-            gap: 20px;
-        }
-
-        .contact-info a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .contact-info a:hover {
-            color: var(--accent-color);
-        }
+        /* سلايدر الصور العلوية */
+        .hero-slider { position: relative; height: 350px; width: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center; color: white; text-align: center; }
+        .slide-item { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; animation: imageFade 15s infinite; }
+        .slide-item:nth-child(1) { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('WhatsApp Image 2025-12-16 at 9.34.51 PM.jpeg'); animation-delay: 0s; }
+        .slide-item:nth-child(2) { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('WhatsApp Image 2025-12-16 at 10.23.38 PM.jpeg'); animation-delay: 5s; }
+        .slide-item:nth-child(3) { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('WhatsApp Image 2025-12-16 at 10.21.44 PM (1).jpeg'); animation-delay: 10s; }
+        @keyframes imageFade { 0%, 10% { opacity: 0; } 20%, 33% { opacity: 1; } 43%, 100% { opacity: 0; } }
         
-        .contact-info i {
-            margin-left: 5px;
-        }
-
-        /* تنسيقات الهيدر الرئيسي */
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 30px 20px 0 20px; 
-            margin-bottom: 0; 
-            box-shadow: none; 
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center; 
-            justify-content: flex-start; 
-            max-width: 1300px;
-            margin: 0 auto; 
-            gap: 25px; 
-            padding-bottom: 30px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        header .main-logo {
-            width: 150px; 
-            height: 150px; 
-            object-fit: cover;
-            border-radius: 50%; 
-            border: 4px solid white; 
-            flex-shrink: 0; 
-        }
-
-        .header-text {
-            text-align: right;
-        }
-
-        header h1 {
-            font-size: 2.5rem; 
-            margin-bottom: 5px;
-            font-weight: 900;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        /* تنسيقات قسم حول أشرقت */
-        .about-us {
-            max-width: 1300px;
-            margin: 40px auto;
-            padding: 30px 20px;
-            background-color: var(--card-background);
-            border-radius: 8px;
-            box-shadow: var(--shadow-pro);
-            text-align: right;
-            border-right: 5px solid var(--accent-color);
-        }
-
-        .about-us h2 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 2rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
-        .about-us p {
-            color: var(--text-dark);
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
-        /* تنسيقات قسم الخريطة */
-        .map-section {
-            max-width: 1300px;
-            margin: 60px auto;
-            padding: 20px;
-            text-align: right;
-        }
-
-        .map-section h2 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--accent-color);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        .map-container {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--shadow-pro);
-            height: 400px; 
-            width: 100%;
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* تنسيقات قائمة الشقق */
-        .apartments {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-            padding: 20px;
-            max-width: 1300px;
-            margin: auto;
-        }
-
-        .apartment {
-            background-color: var(--card-background);
-            border-radius: 8px; 
-            overflow: hidden;
-            box-shadow: var(--shadow-pro);
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            border-top: 5px solid var(--primary-color); 
-        }
-
-        .apartment img {
-            width: 100%;
-            height: 250px; 
-            object-fit: cover;
-            cursor: pointer;
-            transition: opacity 0.4s;
-        }
-
-        .apartment-content {
-            padding: 25px 20px;
-            text-align: right;
-        }
-
-        .apartment-content h3 {
-            margin-bottom: 8px;
-            font-size: 1.6rem;
-            color: var(--primary-color);
-        }
-
-        .apartment-content .price-info {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: var(--text-dark);
-        }
+        /* شبكة الشقق */
+        .apartments-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-8px); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-body { padding: 20px; }
+        .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; list-style: none; font-size: 0.85rem; }
+        .features-list li i { color: var(--accent); margin-left: 5px; }
         
-        .apartment-content .availability-note {
-            display: block;
-            color: #d84315; 
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
+        .btn-group { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; text-decoration: none; text-align: center; }
+        .btn-book { background: var(--primary); color: white; }
+        .btn-gallery { background: #eee; color: #333; }
 
-        .features {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-            margin-bottom: 25px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px; 
-        }
+        /* نظام التعليقات */
+        .comment-section { margin-top: 40px; background: white; padding: 25px; border-radius: 20px; }
+        .comment-box { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-right: 5px solid var(--accent); }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; margin-top: 5px; margin-bottom: 12px; font-family: 'Cairo'; }
 
-        .features li {
-            font-size: 0.95rem; 
-            color: var(--text-dark);
-            background-color: #fff3e0; 
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: 500;
-            flex-shrink: 0;
-        }
-
-        .features li i {
-            color: var(--primary-color); 
-            margin-left: 5px;
-        }
-        
-        .buttons {
-            display: flex;
-            justify-content: flex-start;
-            gap: 15px;
-        }
-
-        .buttons button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-
-        .view-btn {
-            background-color: var(--text-light); 
-            color: white;
-        }
-
-        .book-btn {
-            background-color: var(--accent-color); 
-            color: var(--text-dark);
-            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
-        }
-        
-        /* تنسيقات قسم التقييمات */
-        .reviews-section {
-            max-width: 1300px;
-            margin: 60px auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .reviews-section h2 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .review-card {
-            background-color: var(--card-background);
-            padding: 30px 25px; 
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
-            text-align: right;
-            border-top: 4px solid var(--accent-color); 
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            position: relative;
-        }
-        
-        .review-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .review-card .stars {
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            font-size: 1.2rem; 
-            text-align: center;
-        }
-        
-        .review-card .quote-icon {
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            font-size: 2rem;
-            color: #ffcc80; 
-            opacity: 0.6;
-        }
-
-        .review-card p {
-            font-style: italic;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            font-size: 1rem;
-            position: relative;
-        }
-
-        .review-card .client-name {
-            font-weight: bold;
-            color: var(--primary-color);
-            display: block;
-            font-size: 1rem;
-            border-top: 1px dashed #eee;
-            padding-top: 10px;
-            text-align: left; 
-        }
-
-        /* --------------------------------- */
-        /* تنسيقات معرض الصور المنبثق (Lightbox) - بوظيفة الأسهم */
-        /* --------------------------------- */
-        .lightbox-gallery {
-            display: none; 
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; 
-            background-color: rgba(0,0,0,0.95);
-            padding: 0;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .lightbox-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .lightbox-gallery img {
-            max-width: 100%;
-            max-height: 90vh; 
-            display: block;
-            margin: auto;
-            object-fit: contain;
-            transition: opacity 0.3s;
-        }
-        
-        .lightbox-gallery .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-            z-index: 2010;
-        }
-        
-        /* تنسيقات أزرار التحكم (الأسهم) */
-        .prev-btn, .next-btn {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
-            color: white;
-            font-weight: bold;
-            font-size: 30px;
-            transition: 0.6s ease;
-            user-select: none;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 2005; 
-        }
-
-        .prev-btn {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .next-btn {
-            left: 0;
-            border-radius: 0 3px 3px 0;
-        }
-
-        .prev-btn:hover, .next-btn:hover {
-            background-color: rgba(0,0,0,0.8);
-        }
-        
-        /* مؤشر الصور (Image Counter) */
-        .image-counter {
-            color: white;
-            font-size: 14px;
-            padding: 8px 12px;
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0,0,0,0.6);
-            border-radius: 5px;
-            z-index: 2005;
-        }
-
-        /* تنسيقات نموذج الحجز المنبثق (Modal) */
-        .modal-booking {
-            display: none; 
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4); 
-            padding-top: 60px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .booking-form-content {
-            background-color: #fefefe;
-            margin: 5% auto; 
-            padding: 30px;
-            border: 1px solid #888;
-            width: 90%;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        .close-modal-btn {
-            color: #aaa;
-            float: left;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            cursor: pointer;
-        }
-        
-        .booking-form-content h4 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: right;
-        }
-
-        .attention-message {
-            background-color: #fff3cd;
-            color: #856404;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border: 1px solid #ffeeba;
-            font-size: 0.9rem;
-            text-align: right;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            text-align: right;
-        }
-        
-        .form-row {
-            display: flex;
-            gap: 20px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="tel"],
-        .form-group input[type="date"],
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            background-color: #8b4513; 
-            transform: translateY(-1px);
-        }
-        
-        /* تنسيقات استجابة الشاشة (Media Queries) */
-        @media (max-width: 768px) {
-            .sticky-header {
-                height: auto;
-                flex-direction: column;
-                padding: 10px 20px;
-                gap: 10px;
-            }
-            
-            .logo-title h2 {
-                font-size: 1.2rem;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                gap: 5px;
-                text-align: center;
-            }
-
-            body {
-                padding-top: 130px; 
-            }
-            
-            header .main-logo {
-                width: 120px; 
-                height: 120px; 
-            }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-        }
+        /* نافذة الحجز */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: white; width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; position: relative; max-height: 90vh; overflow-y: auto; }
     </style>
-    
 </head>
-
 <body>
-    
+
     <div class="sticky-header">
-        <div class="logo-title">
-            <img src="WhatsApp Image 2025-12-16 at 9.59.08 PM.jpeg" alt="شعار أشرقت">
+        <div class="logo-area">
+            <img src="WhatsApp Image 2025-12-16 at 9.59.08 PM.jpeg" alt="لوجو">
             <h2>شاليهات أشرقت</h2>
         </div>
-        <div class="contact-info">
-            <a href="tel:01094778898"><i class="fas fa-phone-alt"></i> اتصل الآن: 01094778898</a>
-            <a href="https://wa.me/201094778898" target="_blank"><i class="fab fa-whatsapp"></i> واتساب (الأسرع)</a>
+        <div class="contact-group">
+            <a href="https://wa.me/201094778898"><i class="fab fa-whatsapp"></i> 01094778898</a>
+            <a href="https://wa.me/201090999381"><i class="fab fa-whatsapp"></i> 01090999381</a>
+            <a href="https://wa.me/201111118703"><i class="fab fa-whatsapp"></i> 01111118703</a>
         </div>
     </div>
 
-
-    <header>
-        <div class="header-content">
-            <img src="WhatsApp Image 2025-12-16 at 9.59.08 PM.jpeg" alt="شاليهات أشرقت لوجو" class="main-logo">
-            
-            <div class="header-text">
-                <h1>شاليهات أشرقت</h1>
-                <p>وجهتك الأولى للإيجار الفاخر في مرسى مطروح.</p>
-            </div>
+    <header class="hero-slider">
+        <div class="slide-item"></div><div class="slide-item"></div><div class="slide-item"></div>
+        <div style="position:relative; z-index:10;">
+            <h1>أهلاً بكم في أشرقت</h1>
+            <p>رفاهية الإقامة في قلب مرسى مطروح</p>
         </div>
     </header>
-    
-    <section class="about-us">
-        <h2>✨ شاليهات أشرقت: الهدوء والتميز في بلوبيتش</h2>
-        <p>شاليهاتنا تقع في **قرية بلوبيتش** الساحرة بمرسى مطروح، وتتميز بالهدوء التام والخصوصية. نلتزم بتقديم أعلى مستويات النظافة والتجهيز الكامل بأسعار منخفضة ومناسبة للعائلات.</p>
-        <p><strong>استمتع بإجازة فاخرة دون إزعاج وبأفضل قيمة! تواصل معنا الآن للحجز المباشر.</strong></p>
-    </section>
 
-    <section class="map-section">
-        <h2>📍 موقعنا في قرية بلوبيتش بمرسى مطروح</h2>
-        <div class="map-container">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13735.632289668356!2d27.243542387114755!3d31.35339247076707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145a337482596409%3A0xc646538964d30c5e!2z2KzYqdi32LHYjCDYp9mE2YXZhdmK2YbZiNin2YXZhNiv2Yog2YjZitmF!5e0!3m2!1sar!2seg!4v1702824705500!5m2!1sar!2seg" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-    </section>
-
-
-    <div class="apartments">
-        
-        <div class="apartment"
-            data-images="WhatsApp Image 2025-12-16 at 10.24.18 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.09 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.12 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.07 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.59 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.08 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.05 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.57 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.56 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.55 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.54 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.17 PM.jpeg"
-            data-price="2000" data-name="الشقة 1 (أرضي بتراس)">
-            
-            <img src="WhatsApp Image 2025-12-16 at 10.24.09 PM.jpeg" alt="تراس الشقة 1">
-            
-            <div class="apartment-content">
-                <h3>الشقة 1 (أرضي بتراس)</h3>
-                <p class="price-info">السعر: 2000 جنيه/ليلة</p>
-                <span class="availability-note">⚠️ السعر والتوافر مؤكد بالتواصل المباشر.</span>
-                
-                <ul class="features">
-                    <li><i class="fas fa-bed"></i> 3 غرف نوم</li>
-                    <li><i class="fas fa-snowflake"></i> 1 غرفة مكيفة</li>
-                    <li><i class="fas fa-bath"></i> 1 حمام</li>
-                    <li><i class="fas fa-door-open"></i> مدخل خاص</li>
-                    <li><i class="fas fa-sun"></i> تراس</li>
-                    <li><i class="fas fa-utensils"></i> مطبخ مجهز</li>
-                </ul>
-
-                <div class="buttons">
-                    <button class="view-btn">عرض الصور</button>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
+    <div class="container">
+<div id="apartments" class="apartments-grid">
+                <div class="card">
+                <img src="WhatsApp Image 2025-12-16 at 10.24.09 PM.jpeg">
+                <div class="card-body"><h3>الشقة 1</h3><ul class="features-list"><li><i class="fas fa-bed"></i> 3 غرف</li><li><i class="fas fa-snowflake"></i> مكيفة</li><li>1حمام🚽 </li> <li>تراس كبير </li></ul>
+                <div class="btn-group"><a href="gallery1.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 1')">حجز</button></div></div>
+            </div>
+            <div class="card">
+                <img src="WhatsApp Image 2025-12-16 at 10.23.38 PM.jpeg">
+                <div class="card-body"><h3>الشقة 2</h3><ul class="features-list"><li><i class="fas fa-bed"></i> 3 غرف</li><li><i class="fas fa-sun"></i> فيو رائع</li><li>2حمام🚽</li><li>تراس</li></ul>
+                <div class="btn-group"><a href="gallery2.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 2')">حجز</button></div></div>
+            </div>
+            <div class="card">
+                <img src="WhatsApp Image 2025-12-16 at 10.21.44 PM (1).jpeg">
+                <div class="card-body"><h3>الشقة 3</h3><ul class="features-list"><li><i class="fas fa-eye"></i> ترى البحر</li><li><i class="fas fa-snowflake"></i> مكيفة</li><li>3غرف</li><li>1حمام🚽</li></ul>
+                <div class="btn-group"><a href="gallery3.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 3')">حجز</button></div></div>
+            </div>
+            <div class="card">
+                <img src="WhatsApp Image 2025-12-16 at 10.24.25 PM.jpeg">
+                <div class="card-body"><h3>الشقة 4</h3><ul class="features-list"><li>3غرف</li><li>2حمام🚽</li><li>مكيفه</li></ul>
+                <div class="btn-group"><a href="gallery4.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 4')">حجز</button></div></div>
+            </div>
+            <div class="card">
+                <img src="WhatsApp Image 2025-12-16 at 10.23.25 PM.jpeg">
+                <div class="card-body"><h3>الشقة 5</h3><ul class="features-list"><li><i class="fas fa-snowflake"></i> 2 مكيف</li><li><i class="fas fa-home"></i> 1حمام🚽</li><li>3غرف</li></ul>
+                <div class="btn-group"><a href="gallery5.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 5')">حجز</button></div></div>
+            </div>
+            <div class="card">
+                <img src="WhatsApp Image 2025-12-16 at 10.26.53 PM (1).jpeg">
+                <div class="card-body"><h3>الشقة 6</h3><ul class="features-list"><li><i class="fas fa-star"></i> 3غرف</li><li><i class="fas fa-bath"></i> 2 حمام</li><li> مكيف</li></ul>
+                <div class="btn-group"><a href="gallery6.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 6')">حجز</button></div></div>
+            </div>
+            <div class="card">
+                <img src="WhatsApp Image 2025-12-16 at 9.34.51 PM.jpeg">
+                <div class="card-body"><h3>الشقة 7</h3><ul class="features-list"><li><i class="fas fa-users"></i> عائلية</li><li><i class="fas fa-snowflake"></i> 3 مكيفات</li><li>5غرف</li><li>تراس كبير</li><li>قعدات فاخره</li><li>مطبخ مجهز</li></ul>
+                <div class="btn-group"><a href="gallery7.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 7')">حجز</button></div></div>
             </div>
         </div>
+        <section id="location" style="margin-top: 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+    <h3 style="text-align: center; margin-bottom: 15px; font-family: 'Cairo';">موقعنا على الخريطة</h3>
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3415.820684123!2d27.0704578!3d31.3831023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1456056afdff2f35%3A0xd2c744ac5aad4482!2z2LTYp9mE2YrZh9in2Kog2KfZhtiB2LHZgiDYqNmC2LHZitipINio2YTZiNmK2YrYqCDYqNmF2LHYs9mJINmF2LfZh9mI2K0!5e0!3m2!1sar!2seg!4v1710000000000!5m2!1sar!2seg" 
+        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
+</section>
 
-        <div class="apartment" 
-            data-images="WhatsApp Image 2025-12-16 at 10.23.38 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.33 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.34 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.36 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.39 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.40 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.23.40 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.41 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.41 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.23.43 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.47 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.23.50 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.52 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.31 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.31 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.32 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.32 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.33 PM.jpeg,WhatsApp Image 2025-12-16 at 10.23.47 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.35 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.36 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.36 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.37 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.38 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.39 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.39 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.41 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.42 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.43 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.45 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.46 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.46 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.47 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.48 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.48 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.49 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.50 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.50 PM (1).jpeg"
-            data-price="2500" data-name="الشقة 2 (مدخل خاص)">
-            
-            <img src="WhatsApp Image 2025-12-16 at 10.23.38 PM.jpeg" alt="صالة الشقة 2">
-            
-            <div class="apartment-content">
-                <h3>الشقة 2 (ارضي بتراس)</h3>
-                <p class="price-info">السعر: 2500 جنيه/ليلة</p>
-                <span class="availability-note">⚠️ السعر والتوافر مؤكد بالتواصل المباشر.</span>
-                
-                <ul class="features">
-                    <li><i class="fas fa-bed"></i> 3 غرف نوم</li>
-                    <li><i class="fas fa-snowflake"></i> 1 غرفة مكيفة</li>
-                    <li><i class="fas fa-bath"></i> 2 حمام</li>
-                    <li><i class="fas fa-door-open"></i> مدخل خاص</li>
-                    <li><i class="fas fa-sun"></i> بلكونة واسعة</li>
-                    <li><i class="fas fa-utensils"></i> مطبخ مجهز</li>
-                </ul>
-
-                <div class="buttons">
-                    <button class="view-btn">عرض الصور</button>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="apartment" 
-            data-images="WhatsApp Image 2025-12-16 at 10.21.44 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.21.43 PM (2).jpeg,WhatsApp Image 2025-12-16 at 10.21.43 PM (1).jpeg"
-            data-price="2200" data-name="الشقة 3 (ترى البحر)">
-            
-            <img src="WhatsApp Image 2025-12-16 at 10.21.44 PM (1).jpeg" alt="بلكونة الشقة 3 بإطلالة بحرية">
-            
-            <div class="apartment-content">
-                <h3>الشقة 3 </h3>
-                <p class="price-info">السعر: 2200 جنيه/ليلة</p>
-                <span class="availability-note">⚠️ السعر والتوافر مؤكد بالتواصل المباشر.</span>
-                
-                <ul class="features">
-                    <li><i class="fas fa-bed"></i> 3 غرف نوم</li>
-                    <li><i class="fas fa-snowflake"></i> 1 غرفة مكيفة</li>
-                    <li><i class="fas fa-bath"></i> 1 حمام</li>
-                    <li><i class="fas fa-eye"></i> إطلالة بحرية</li>
-                    <li><i class="fas fa-sun"></i> بلكونة كبيرة</li>
-                    <li><i class="fas fa-utensils"></i> مطبخ مجهز</li>
-                </ul>
-
-                <div class="buttons">
-                    <button class="view-btn">عرض الصور</button>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="apartment" 
-            data-images="WhatsApp Image 2025-12-16 at 10.24.25 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.22 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.25 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.26 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.20 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.20 PM (1).jpeg,WhatsApp Image 2025-12-16 at 10.24.19 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.27 PM.jpeg,WhatsApp Image 2025-12-16 at 10.24.23 PM.jpeg"
-            data-price="1900" data-name="الشقة 4 (إقتصادية)">
-            
-            <img src="WhatsApp Image 2025-12-16 at 10.24.25 PM.jpeg" alt="صالة الشقة 4">
-            
-            <div class="apartment-content">
-                <h3>الشقة 4 </h3>
-                <p class="price-info">السعر: 1900 جنيه/ليلة</p>
-                <span class="availability-note">⚠️ السعر والتوافر مؤكد بالتواصل المباشر.</span>
-                
-                <ul class="features">
-                    <li><i class="fas fa-bed"></i>3 غرف نوم</li>
-                    <li><i class="fas fa-fan"></i> غرقه مكيفه</li>
-                    <li><i class="fas fa-bath"></i> 2حمام</li>
-                    <li><i class="fas fa-utensils"></i> مطبخ مجهز</li>
-                </ul>
-                
-                <div class="buttons">
-                    <button class="view-btn">عرض الصور</button>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="apartment" 
-            data-images="WhatsApp Image 2025-12-16 at 10.23.25 PM.jpeg, WhatsApp Image 2025-12-16 at 10.21.44 PM.jpeg"
-            data-price="1800" data-name="الشقة 5 (دور علوي)">
-            
-            <img src="WhatsApp Image 2025-12-16 at 10.23.25 PM.jpeg" alt="صالة الشقة 5">
-            
-            <div class="apartment-content">
-                <h3>الشقة 5 </h3>
-                <p class="price-info">السعر: 1800 جنيه/ليلة</p>
-                <span class="availability-note">⚠️ السعر والتوافر مؤكد بالتواصل المباشر.</span>
-                
-                <ul class="features">
-                    <li><i class="fas fa-bed"></i> 3 غرف نوم</li>
-                    <li><i class="fas fa-fan"></i> 2غرفه مكيفه </li>
-                    <li><i class="fas fa-bath"></i> 1 حمام</li>
-                    <li><i class="fas fa-utensils"></i> مطبخ مجهز</li>
-                </ul>
-                
-                <div class="buttons">
-                    <button class="view-btn">عرض الصور</button>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="apartment" 
-            data-images="WhatsApp Image 2025-12-16 at 10.26.16 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.17 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.19 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.20 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.37 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.39 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.53 PM (1).jpeg, WhatsApp Image 2025-12-16 at 10.26.53 PM (2).jpeg, WhatsApp Image 2025-12-16 at 10.26.53 PM (3).jpeg, WhatsApp Image 2025-12-16 at 10.26.53 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.54 PM (1).jpeg, WhatsApp Image 2025-12-16 at 10.26.55 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.55 PM (2).jpeg, WhatsApp Image 2025-12-16 at 10.26.55 PM (1).jpeg, WhatsApp Image 2025-12-16 at 10.26.54 PM.jpeg, WhatsApp Image 2025-12-16 at 10.26.54 PM (2).jpeg"
-            data-price="2300" data-name="الشقة 6 (فاخرة)">
-            
-            <img src="WhatsApp Image 2025-12-16 at 10.26.53 PM (1).jpeg">
-            
-            <div class="apartment-content">
-                <h3>الشقة 6 </h3>
-                <p class="price-info">السعر: 2300 جنيه/ليلة</p>
-                <span class="availability-note">⚠️ السعر والتوافر مؤكد بالتواصل المباشر.</span>
-                
-                <ul class="features">
-                    <li><i class="fas fa-bed"></i> 3 غرف نوم</li>
-                    <li><i class="fas fa-snowflake"></i> 2غرفه مكيفة/li>
-                    <li><i class="fas fa-bath"></i> 2 حمام</li>
-                    <li><i class="fas fa-utensils"></i> مطبخ مجهز</li>
-                    <li><i class="fas fa-balcony"></i> بلكونة واسعة</li>
-                </ul>
-                
-                <div class="buttons">
-                    <button class="view-btn">عرض الصور</button>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="apartment" 
-            data-images="WhatsApp Image 2025-12-16 at 9.34.52 PM.jpeg, WhatsApp Image 2025-12-16 at 9.34.51 PM (1).jpeg, WhatsApp Image 2025-12-16 at 9.34.51 PM (2).jpeg, WhatsApp Image 2025-12-16 at 9.34.51 PM (4).jpeg, WhatsApp Image 2025-12-16 at 9.34.51 PM (5).jpeg, WhatsApp Image 2025-12-16 at 9.34.51 PM (6).jpeg, WhatsApp Image 2025-12-16 at 9.34.51 PM.jpeg, WhatsApp Image 2025-12-16 at 9.34.52 PM (2).jpeg, WhatsApp Image 2025-12-16 at 9.34.52 PM (3).jpeg, WhatsApp Image 2025-12-16 at 9.34.52 PM.jpeg"
-            data-price="2100" data-name="الشقة 7 (إضافية)">
-            
-            <img src="WhatsApp Image 2025-12-16 at 9.34.51 PM.jpeg" alt="الشقة 7">
-            
-            <div class="apartment-content">
-                <h3>الشقة 7 (روف فاخر)</h3>
-                <p class="price-info">السعر: 2100 جنيه/ليلة</p>
-                <span class="availability-note">⚠️ السعر والتوافر مؤكد بالتواصل المباشر.</span>
-                
-                <ul class="features">
-                    <li><i class="fas fa-bed"></i>5 غرف نوم</li>
-                    <li><i class="fas fa-fan"></i> 3غرف مكيفة/li>
-                    <li><i class="fas fa-bath"></i> 3حمام</li>
-                    <li><i class="fas fa-utensils"></i> مطبخ مجهز</li>
-                    <li><i class="fas fa-location-arrow"></i> رؤيه مميزه للبحر</li>
-                </ul>
-                
-                <div class="buttons">
-                    <button class="view-btn">عرض الصور</button>
-                    <button class="book-btn">احجز الآن</button>
-                </div>
-            </div>
-        </div>
-        
+        <section class="comment-section">
+            <h3 style="text-align: center; margin-bottom: 15px;">آراء النزلاء</h3>
+            <input type="text" id="vName" placeholder="الاسم">
+            <textarea id="vText" placeholder="رأيك في الإقامة..." rows="2"></textarea>
+            <button onclick="saveComment()" id="cmtBtn" class="btn btn-book" style="width: 100%;">نشر التعليق</button>
+            <div id="commentsDisplay" style="margin-top:20px;">جاري تحميل الآراء...</div>
+        </section>
     </div>
-    
-    <section class="reviews-section">
-        <h2>⭐️ تقييمات العملاء</h2>
-        <div class="reviews-grid">
-            
-            <div class="review-card">
-                <i class="fas fa-quote-right quote-icon"></i>
-                <div class="stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p>"نظافة لا مثيل لها وخدمة سريعة جدًا. الشقة 2 كانت مثالية للعائلة بفضل التراس الكبير."</p>
-                <span class="client-name">- أ. محمد علي</span>
-            </div>
 
-            <div class="review-card">
-                <i class="fas fa-quote-right quote-icon"></i>
-                <div class="stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeModal()" style="float:left; cursor:pointer; font-size:24px;">&times;</span>
+            <h3 style="margin-bottom:15px;">حجز <span id="aptLabel" style="color:var(--accent)"></span></h3>
+            <form id="resForm">
+                <input type="text" id="userName" placeholder="الاسم بالكامل" required>
+                <input type="tel" id="userPhone" placeholder="رقم الموبايل" required>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div><label style="font-size:0.7rem">وصول</label><input type="date" id="checkIn" required></div>
+                    <div><label style="font-size:0.7rem">مغادرة</label><input type="date" id="checkOut" required></div>
                 </div>
-                <p>"الموقع هادئ جداً كما وُصف، والشقة 6 فاخرة جداً والأثاث جديد. تجربة ممتازة."</p>
-                <span class="client-name">- أ. سارة فؤاد</span>
-            </div>
-            
-            <div class="review-card">
-                <i class="fas fa-quote-right quote-icon"></i>
-                <div class="stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p>"تعامل راقي وسريع في إجراءات الحجز، والشقة 4 كانت مناسبة جداً للميزانية والإقامة القصيرة."</p>
-                <span class="client-name">- أ. خالد محمود</span>
-            </div>
-        </div>
-    </section>
-    
-    
-    <div id="image-gallery" class="lightbox-gallery" style="display:none;">
-        <span class="close-btn">×</span>
-        
-        <div class="lightbox-content">
-            <img id="lightbox-image" src="" alt="صورة الشقة">
-            
-            <a class="prev-btn" onclick="prevImage()">&#10095;</a>
-            <a class="next-btn" onclick="nextImage()">&#10094;</a>
-            
-            <div class="image-counter" id="image-counter"></div>
-        </div>
-        
-    </div>
-    
-    <div id="booking-modal" class="modal-booking" style="display:none;">
-        <div class="booking-form-content">
-            <span class="close-modal-btn">×</span>
-            <h4 id="modal-title">طلب حجز: </h4>
-            <div class="attention-message">
-                الرجاء ملء النموذج وسنتواصل معك على واتساب لتأكيد السعر والتوافر.
-            </div>
-            <form id="booking-form">
-                <input type="hidden" id="apartment-id" name="apartment_id">
-                
-                <div class="form-group">
-                    <label for="name">الاسم الثلاثي:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="phone">رقم الواتساب (مفتاح الدولة):</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+201xxxxxxxxx" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="apartment-name">الشقة المطلوبة:</label>
-                        <input type="text" id="apartment-name" name="apartment_name" readonly required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="check-in">تاريخ الوصول:</label>
-                        <input type="date" id="check-in" name="check_in" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="check-out">تاريخ المغادرة:</label>
-                        <input type="date" id="check-out" name="check_out" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="notes">ملاحظات إضافية (عدد الأفراد، استفسارات):</label>
-                    <textarea id="notes" name="notes" rows="3"></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">إرسال طلب الحجز</button>
+                <input type="number" id="userGuests" placeholder="عدد الأفراد" required>
+                <select id="selectWa">
+                    <option value="201094778898">المسؤول 1 (898)</option>
+                    <option value="201090999381">المسؤول 2 (678)</option>
+                    <option value="201111118703">المسؤول 3 (321)</option>
+                </select>
+                <textarea id="userNotes" placeholder="أي طلبات خاصة؟" rows="2"></textarea>
+                <button type="submit" id="bookSubmitBtn" class="btn btn-book" style="width:100%;">تأكيد وإرسال واتساب</button>
             </form>
         </div>
     </div>
-    
+
     <script>
-        let currentImageIndex = 0;
-        let currentImageList = [];
-        const gallery = document.getElementById('image-gallery');
-        const lightboxImage = document.getElementById('lightbox-image');
-        const imageCounter = document.getElementById('image-counter');
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const apartments = document.querySelectorAll('.apartment');
-            const closeBtn = gallery.querySelector('.close-btn');
-            
-            const bookingModal = document.getElementById('booking-modal');
-            const closeBookingBtn = bookingModal.querySelector('.close-modal-btn');
-            const bookingForm = document.getElementById('booking-form');
-            const modalTitle = document.getElementById('modal-title');
-            const apartmentNameInput = document.getElementById('apartment-name');
-            const apartmentIdInput = document.getElementById('apartment-id');
+        const commentsApi = 'https://script.google.com/macros/s/AKfycbypXFwXJNF576fkFZ4ZpfQRQLNj-aJ280ViGLZpeWED2FQ3DV0cT0l9g4HbiDtX04Lk/exec';
+        const bookingsApi = 'https://script.google.com/macros/s/AKfycbyT5TjayKyw8dun7jqld0d0H3l78CEyKjpvf-Pf_mvb7nI53SWrp7dbStvLmDUz2bYU/exec';
 
-
-            // دالة لعرض صورة محددة وتحديث المؤشر
-            window.showImage = function(n) {
-                if (currentImageList.length === 0) return;
-
-                if (n >= currentImageList.length) {
-                    currentImageIndex = 0;
-                } else if (n < 0) {
-                    currentImageIndex = currentImageList.length - 1;
-                } else {
-                    currentImageIndex = n;
-                }
-                
-                lightboxImage.src = currentImageList[currentImageIndex];
-                imageCounter.textContent = `${currentImageIndex + 1} / ${currentImageList.length}`;
-            }
-
-            // الانتقال للصورة التالية
-            window.nextImage = function() {
-                showImage(currentImageIndex + 1);
-            }
-
-            // الانتقال للصورة السابقة
-            window.prevImage = function() {
-                showImage(currentImageIndex - 1);
-            }
-
-
-            // 1. فتح معرض الصور (Lightbox)
-            apartments.forEach(apartment => {
-                const viewBtn = apartment.querySelector('.view-btn');
-                const imgElement = apartment.querySelector('img');
-
-                // فتح المعرض عند النقر على الصورة الرئيسية أو زر "عرض الصور"
-                [viewBtn, imgElement].forEach(element => {
-                    element.addEventListener('click', () => {
-                        const imageListString = apartment.getAttribute('data-images');
-                        currentImageList = imageListString.split(',').map(img => img.trim());
-                        
-                        gallery.style.display = 'flex'; // عرض المعرض
-                        showImage(0); // عرض أول صورة
-                    });
-                });
+        // تحميل التعليقات
+        function loadComments() {
+            fetch(commentsApi).then(res => res.json()).then(data => {
+                document.getElementById('commentsDisplay').innerHTML = data.reverse().map(c => `
+                    <div class="comment-box"><strong>${c.name}</strong><p>${c.comment}</p></div>
+                `).join('') || "كن أول من يعلق!";
             });
+        }
 
-            // إغلاق المعرض عند النقر على X
-            if(closeBtn) {
-                closeBtn.onclick = () => gallery.style.display = 'none';
-            }
-            
-            // إغلاق المعرض عند النقر خارج الصورة/المحتوى
-            gallery.addEventListener('click', (e) => {
-                // نغلق المعرض إذا كان النقر مباشرة على الخلفية السوداء (gallery div)
-                if (e.target === gallery) {
-                    gallery.style.display = 'none';
-                }
+        // حفظ تعليق جديد
+        function saveComment() {
+            const name = document.getElementById('vName').value;
+            const text = document.getElementById('vText').value;
+            if(!name || !text) return;
+            document.getElementById('cmtBtn').disabled = true;
+            fetch(`${commentsApi}?name=${encodeURIComponent(name)}&comment=${encodeURIComponent(text)}`, { method: 'POST' })
+            .then(() => {
+                document.getElementById('vName').value = ''; document.getElementById('vText').value = '';
+                document.getElementById('cmtBtn').disabled = false; loadComments();
             });
-            
-            // إغلاق المعرض باستخدام زر Escape والتنقل بالأسهم
-            document.addEventListener('keydown', function(e) {
-                if (gallery.style.display === 'flex') {
-                    if (e.key === 'Escape') {
-                        gallery.style.display = 'none';
-                    }
-                    // يمين لوحة المفاتيح
-                    if (e.key === 'ArrowRight') {
-                        prevImage(); 
-                    }
-                    // يسار لوحة المفاتيح
-                    if (e.key === 'ArrowLeft') {
-                        nextImage(); 
-                    }
-                }
+        }
+
+        function openBooking(name) {
+            document.getElementById('aptLabel').innerText = name;
+            document.getElementById('bookingModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
+
+        // إرسال الحجز
+        document.getElementById('resForm').onsubmit = function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('bookSubmitBtn');
+            const data = {
+                apt: document.getElementById('aptLabel').innerText,
+                name: document.getElementById('userName').value,
+                phone: document.getElementById('userPhone').value,
+                cin: document.getElementById('checkIn').value,
+                cout: document.getElementById('checkOut').value,
+                guests: document.getElementById('userGuests').value,
+                wa: document.getElementById('selectWa').value,
+                notes: document.getElementById('userNotes').value
+            };
+
+            btn.disabled = true;
+            btn.innerText = "جاري الإرسال...";
+
+            // فتح الواتساب فوراً
+            const waMsg = `*حجز جديد*%0A*الوحدة:* ${data.apt}%0A*الاسم:* ${data.name}%0A*الأفراد:* ${data.guests}%0A*من:* ${data.cin}%0A*إلى:* ${data.cout}`;
+            window.open(`https://wa.me/${data.wa}?text=${waMsg}`, '_blank');
+
+            // إرسال البيانات للجوجل شيت
+            const params = new URLSearchParams();
+            params.append('userName', data.name);
+            params.append('userPhone', data.phone);
+            params.append('aptName', data.apt);
+            params.append('checkIn', data.cin);
+            params.append('checkOut', data.cout);
+            params.append('guests', data.guests);
+            params.append('contactedNum', data.wa);
+            params.append('userNotes', data.notes);
+
+            fetch(bookingsApi, { method: 'POST', body: params }).then(() => {
+                closeModal();
+                btn.disabled = false;
+                btn.innerText = "تأكيد وإرسال واتساب";
             });
+        };
 
-            // 2. وظيفة فتح نافذة الحجز (Booking Modal)
-            document.querySelectorAll('.book-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const apartment = e.target.closest('.apartment');
-                    const name = apartment.getAttribute('data-name');
-                    const price = apartment.getAttribute('data-price');
-                    
-                    modalTitle.textContent = `طلب حجز: ${name} (السعر التقديري: ${price} ج.م)`;
-                    apartmentNameInput.value = name;
-                    apartmentIdInput.value = name.replace(/[^a-zA-Z0-9]/g, ''); 
-                    
-                    bookingModal.style.display = 'flex'; 
-                });
-            });
-
-            // إغلاق نافذة الحجز عند النقر على X
-            if(closeBookingBtn) {
-                closeBookingBtn.onclick = () => bookingModal.style.display = 'none';
-            }
-
-            // إغلاق نافذة الحجز عند النقر خارج النموذج
-            bookingModal.addEventListener('click', (e) => {
-                if (e.target.id === 'booking-modal') {
-                    bookingModal.style.display = 'none';
-                }
-            });
-
-            // 3. وظيفة إرسال النموذج (تحويل إلى واتساب)
-            bookingForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const name = document.getElementById('name').value;
-                const phone = document.getElementById('phone').value.replace('+', '');
-                const apartmentName = apartmentNameInput.value;
-                const checkIn = document.getElementById('check-in').value;
-                const checkOut = document.getElementById('check-out').value;
-                const notes = document.getElementById('notes').value;
-                
-                const message = `
-*🌟 طلب حجز شالية في أشرقت 🌟*
-أهلاً، أود حجز الشقة التالية:
-- *الشقة:* ${apartmentName}
-- *الاسم:* ${name}
-- *رقم الهاتف:* ${phone}
-- *تاريخ الوصول:* ${checkIn}
-- *تاريخ المغادرة:* ${checkOut}
-- *ملاحظات:* ${notes || 'لا توجد ملاحظات إضافية.'}
----
-الرجاء تأكيد السعر والتوافر. شكراً.
-                `.trim();
-
-                const ownerWhatsApp = '201094778898'; 
-                const whatsappUrl = `https://wa.me/${ownerWhatsApp}?text=${encodeURIComponent(message)}`;
-                
-                window.open(whatsappUrl, '_blank');
-                
-                bookingModal.style.display = 'none';
-                bookingForm.reset();
-            });
-
-        });
+        loadComments();
     </script>
+    <footer style="background: #1a1a1a; color: white; padding: 60px 5% 20px; margin-top: 50px; border-top: 5px solid var(--accent); direction: rtl;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
+        
+        <div style="text-align: right;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <img src="WhatsApp Image 2025-12-16 at 9.59.08 PM.jpeg" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--accent);">
+                <h2 style="color: var(--accent); font-size: 1.6rem;">شاليهات أشرقت</h2>
+            </div>
+            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.7;">إقامة فندقية فاخرة في قرية بلوبيتش بمرسى مطروح. استمتع بالخصوصية والراحة مع عائلتك في أرقى الشاليهات المطلة على البحر.</p>
+        </div>
 
+        <div style="text-align: right;">
+            <h3 style="margin-bottom: 20px; color: var(--accent); font-size: 1.2rem;">روابط سريعة</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 12px;"><a href="#" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-home" style="font-size: 0.8rem;"></i> الرئيسية</a></li>
+                
+                <li style="margin-bottom: 12px;"><a href="#apartments" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-door-open" style="font-size: 0.8rem;"></i> الشقق المتوفرة</a></li>
+                
+                <li style="margin-bottom: 12px;"><a href="#location" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-map-marked-alt" style="font-size: 0.8rem;"></i> موقعنا على الخريطة</a></li>
+            </ul>
+        </div>
+
+        <div style="text-align: right;">
+            <h3 style="margin-bottom: 20px; color: var(--accent); font-size: 1.2rem;">تواصل معنا</h3>
+            <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                <a href="https://wa.me/201094778898" target="_blank" style="color: #ccc; text-decoration: none;"><i class="fab fa-whatsapp" style="color: #25d366; margin-left: 10px;"></i> 01094778898</a>
+                <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3415.820684123!2d27.0704578!3d31.3831023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1456056afdff2f35%3A0xd2c744ac5aad4482!2z2LTYp9mE2YrZh9in2Kog2KfZhtiB2LHZgiDYqNmC2LHZitipINio2YTZiNmK2YrYqCDYqNmF2LHYs9mJINmF2LfZh9mI2K0!5e0!3m2!1sar!2seg!4v1710000000000!5m2!1sar!2seg" target="_blank" style="color: #ccc; text-decoration: none;"><i class="fas fa-location-arrow" style="color: #ff5722; margin-left: 10px;"></i> قرية بلوبيتش - مطروح</a>
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+                <a href="https://www.facebook.com/share/1DgJ7wAaCg/" target="_blank" title="تابعنا على فيسبوك" 
+                   style="background: #1877f2; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; transform: scale(1);"
+                   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                
+                <a href="https://wa.me/201094778898" target="_blank" title="تواصل عبر واتساب"
+                   style="background: #25d366; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;"
+                   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="border-top: 1px solid #333; margin-top: 40px; padding-top: 20px; text-align: center; color: #666; font-size: 0.85rem;">
+        <p>جميع الحقوق محفوظة &copy; 2026 شاليهات أشرقت</p>
+    </div>
+</footer>
 </body>
 </html>
