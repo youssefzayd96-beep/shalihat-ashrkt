@@ -145,111 +145,151 @@
 </div>
         </div>
     </div>
+<script>
+    // الروابط والبيانات الخاصة بك
+    const API_KEY = "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRFek5qZ3hNU3dpYm1GdFpTSTZJakUzTnpJMU5EVXlOekV1TnpJNE9UQTRJbjAuZnd4MnN6Y1lpaGFvbWZOUF9rR0JKX0xsUUExcXhNQjFuVmcwUmU4RVJSV1NqQTRaZGMtbGY0a0dQNE0wY09kazc5Szc5RkdjYWpacE9RcXB6aEoxelE=";
+    const INT_ID = 5563302; // رقم الانتجريشن بتاعك
+    const commentsApi = 'https://script.google.com/macros/s/AKfycbypXFwXJNF576fkFZ4ZpfQRQLNj-aJ280ViGLZpeWED2FQ3DV0cT0l9g4HbiDtX04Lk/exec';
+    const bookingsApi = 'https://script.google.com/macros/s/AKfycbyab5k49obK4hIu8B-gDBS9Q5NfkxQmfKDRD20atT6L-gAOuQgczwA31u6wFx8zpnnr/exec';
 
-    <script>
-        // الروابط والبيانات الخاصة بك
-        const API_KEY = "ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRFek5qZ3hNU3dpYm1GdFpTSTZJbWx1YVhScFlXd2lmUS5YU3A2aElDQng5TWhCa210Vk5iLU5rbG1kNXhxb290OVU0RVgtbXNYLU1zU0J1UWlTZWpFbTdjMS1FQTd2NGdWZUtiQ0t2NUFwa000aGNMSzROM0JJdw====";
-        const INT_ID = "5563302";
-        const commentsApi = 'https://script.google.com/macros/s/AKfycbypXFwXJNF576fkFZ4ZpfQRQLNj-aJ280ViGLZpeWED2FQ3DV0cT0l9g4HbiDtX04Lk/exec';
-        const bookingsApi = 'https://script.google.com/macros/s/AKfycbzgrWLf6f9fCSEs6kB-ITsjlB6OcdU-cS_QdshD9wVIO1ZpsGKQ_oDJ4LcveGjgW6wL/exec'; // ضع رابط الـ Web App الجديد هنا
+    let lastOrderData = {};
 
-        let lastOrderData = {};
+    function loadComments() {
+        fetch(commentsApi).then(res => res.json()).then(data => {
+            document.getElementById('commentsDisplay').innerHTML = data.reverse().map(c => `
+                <div class="comment-box"><strong>${c.name}</strong><p>${c.comment}</p></div>
+            `).join('') || "كن أول من يعلق!";
+        }).catch(err => console.log("تحميل التعليقات متوقف"));
+    }
 
-        function loadComments() {
-            fetch(commentsApi).then(res => res.json()).then(data => {
-                document.getElementById('commentsDisplay').innerHTML = data.reverse().map(c => `
-                    <div class="comment-box"><strong>${c.name}</strong><p>${c.comment}</p></div>
-                `).join('') || "كن أول من يعلق!";
-            });
-        }
+    function saveComment() {
+        const name = document.getElementById('vName').value;
+        const text = document.getElementById('vText').value;
+        if(!name || !text) return;
+        document.getElementById('cmtBtn').disabled = true;
+        fetch(`${commentsApi}?name=${encodeURIComponent(name)}&comment=${encodeURIComponent(text)}`, { method: 'POST' })
+        .then(() => {
+            document.getElementById('vName').value = ''; document.getElementById('vText').value = '';
+            document.getElementById('cmtBtn').disabled = false; loadComments();
+        });
+    }
 
-        function saveComment() {
-            const name = document.getElementById('vName').value;
-            const text = document.getElementById('vText').value;
-            if(!name || !text) return;
-            document.getElementById('cmtBtn').disabled = true;
-            fetch(`${commentsApi}?name=${encodeURIComponent(name)}&comment=${encodeURIComponent(text)}`, { method: 'POST' })
-            .then(() => {
-                document.getElementById('vName').value = ''; document.getElementById('vText').value = '';
-                document.getElementById('cmtBtn').disabled = false; loadComments();
-            });
-        }
+    function openBooking(name) {
+        document.getElementById('aptLabel').innerText = name;
+        document.getElementById('bookingModal').style.display = 'flex';
+        document.getElementById('resForm').style.display = 'block';
+        document.getElementById('payInfo').style.display = 'none';
+    }
 
-        function openBooking(name) {
-            document.getElementById('aptLabel').innerText = name;
-            document.getElementById('bookingModal').style.display = 'flex';
-            document.getElementById('resForm').style.display = 'block';
-            document.getElementById('payInfo').style.display = 'none';
-        }
+    function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
 
-        function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
+    document.getElementById('resForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('bookSubmitBtn');
+        btn.disabled = true; btn.innerText = "جاري استخراج الكود...";
 
-        // الوظيفة الجديدة للدفع والربط
-        document.getElementById('resForm').onsubmit = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('bookSubmitBtn');
-            btn.disabled = true; btn.innerText = "جاري التأكد...";
-
-            const formData = {
-                apt: document.getElementById('aptLabel').innerText,
-                name: document.getElementById('userName').value,
-                phone: document.getElementById('userPhone').value,
-                cin: document.getElementById('checkIn').value,
-                cout: document.getElementById('checkOut').value,
-                guests: document.getElementById('userGuests').value,
-                wa: document.getElementById('selectWa').value,
-                notes: document.getElementById('userNotes').value
-            };
-
-            try {
-                // 1. Paymob Auth
-                const auth = await fetch('https://accept.paymob.com/api/auth/tokens', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ "api_key": API_KEY })
-                }).then(r => r.json());
-
-                // 2. Create Order
-                const order = await fetch('https://accept.paymob.com/api/ecommerce/orders', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ "auth_token": auth.token, "amount_cents": "50000", "currency": "EGP", "items": [] })
-                }).then(r => r.json());
-
-                // 3. Save to Google
-                const params = new URLSearchParams();
-                params.append('userName', formData.name);
-                params.append('userPhone', formData.phone);
-                params.append('aptName', formData.apt);
-                params.append('checkIn', formData.cin);
-                params.append('checkOut', formData.cout);
-                params.append('guests', formData.guests);
-                params.append('paymobOrderId', order.id);
-
-                const check = await fetch(bookingsApi, { method: 'POST', body: params }).then(r => r.text());
-
-                if(check === "BUSY") {
-                    alert("عذراً، الشقة محجوزة في هذه التواريخ.");
-                    btn.disabled = false; btn.innerText = "تأكيد التواريخ واستخراج كود فوري";
-                } else {
-                    lastOrderData = { ...formData, orderId: order.id };
-                    document.getElementById('resForm').style.display = 'none';
-                    document.getElementById('payInfo').style.display = 'block';
-                    document.getElementById('fawryDisplay').innerText = order.id;
-                }
-            } catch (err) {
-                alert("حدث خطأ، يرجى المحاولة لاحقاً.");
-                btn.disabled = false;
-            }
+        const formData = {
+            apt: document.getElementById('aptLabel').innerText,
+            name: document.getElementById('userName').value,
+            phone: document.getElementById('userPhone').value,
+            cin: document.getElementById('checkIn').value,
+            cout: document.getElementById('checkOut').value,
+            guests: document.getElementById('userGuests').value,
+            wa: document.getElementById('selectWa').value,
+            notes: document.getElementById('userNotes').value
         };
 
-        function finalWaSend() {
-            const msg = `*حجز جديد وكود دفع*%0A*الوحدة:* ${lastOrderData.apt}%0A*الاسم:* ${lastOrderData.name}%0A*رقم الطلب:* ${lastOrderData.orderId}%0A*من:* ${lastOrderData.cin}%0A*إلى:* ${lastOrderData.cout}`;
-            window.open(`https://wa.me/${lastOrderData.wa}?text=${msg}`, '_blank');
-        }
+        try {
+            // 1. Auth Token
+            const authResponse = await fetch('https://accept.paymob.com/api/auth/tokens', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "api_key": API_KEY })
+            });
+            const auth = await authResponse.json();
 
-        loadComments();
-    </script>
+            // 2. Create Order
+            const orderResponse = await fetch('https://accept.paymob.com/api/ecommerce/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "auth_token": auth.token,
+                    "delivery_needed": "false",
+                    "amount_cents": "50000",
+                    "currency": "EGP",
+                    "items": []
+                })
+            });
+            const order = await orderResponse.json();
+
+            // 3. Payment Key (دي الخطوة اللي كانت ناقصة)
+            const pKeyResponse = await fetch('https://accept.paymob.com/api/acceptance/payment_keys', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "auth_token": auth.token,
+                    "amount_cents": "50000",
+                    "expiration": 3600,
+                    "order_id": order.id,
+                    "billing_data": {
+                        "first_name": formData.name.split(' ')[0] || "Guest",
+                        "last_name": formData.name.split(' ')[1] || "User",
+                        "email": "test@test.com",
+                        "phone_number": formData.phone,
+                        "apartment": "NA", "floor": "NA", "street": "NA", "building": "NA",
+                        "shipping_method": "NA", "postal_code": "NA", "city": "NA", "country": "EG", "state": "NA"
+                    },
+                    "currency": "EGP",
+                    "integration_id": INT_ID
+                })
+            });
+            const pKey = await pKeyResponse.json();
+
+            // 4. Get Fawry Code (Kiosk Request)
+            const fawryResponse = await fetch('https://accept.paymob.com/api/acceptance/payments/pay', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "source": { "identifier": "AGGREGATOR", "subtype": "AGGREGATOR" },
+                    "payment_token": pKey.token
+                })
+            });
+            const fawryData = await fawryResponse.json();
+
+            // 5. Save to Google Sheets
+            const params = new URLSearchParams();
+            params.append('userName', formData.name);
+            params.append('userPhone', formData.phone);
+            params.append('aptName', formData.apt);
+            params.append('checkIn', formData.cin);
+            params.append('checkOut', formData.cout);
+            params.append('guests', formData.guests);
+            params.append('paymobOrderId', order.id);
+
+            await fetch(bookingsApi, { method: 'POST', body: params });
+
+            // إظهار النتيجة
+            lastOrderData = { ...formData, orderId: order.id };
+            document.getElementById('fawryDisplay').innerText = fawryData.data.bill_reference;
+            document.getElementById('resForm').style.display = 'none';
+            document.getElementById('payInfo').style.display = 'block';
+
+        } catch (err) {
+            console.error(err);
+            alert("حدث خطأ في الاتصال بباي موب، تأكد من الـ API Key");
+            btn.disabled = false;
+            btn.innerText = "تأكيد التواريخ واستخراج كود فوري";
+        }
+    };
+
+    function finalWaSend() {
+        const fawryCode = document.getElementById('fawryDisplay').innerText;
+        const msg = `*طلب حجز جديد*%0A*الشقة:* ${lastOrderData.apt}%0A*الاسم:* ${lastOrderData.name}%0A*كود فوري:* ${fawryCode}%0A*المبلغ:* 500 جنيه%0A*من:* ${lastOrderData.cin} *إلى:* ${lastOrderData.cout}`;
+        window.open(`https://wa.me/${lastOrderData.wa}?text=${msg}`, '_blank');
+    }
+
+    loadComments();
+</script>
 
     <footer style="background: #1a1a1a; color: white; padding: 60px 5% 20px; margin-top: 50px; border-top: 5px solid var(--accent); direction: rtl;">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
