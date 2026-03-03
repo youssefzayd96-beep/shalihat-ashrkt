@@ -50,6 +50,7 @@
         /* نافذة الحجز */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: white; width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 28px; cursor: pointer; color: #333; font-weight: bold; z-index: 2100; }
     </style>
 </head>
 <body>
@@ -69,14 +70,14 @@
     <header class="hero-slider">
         <div class="slide-item"></div><div class="slide-item"></div><div class="slide-item"></div>
         <div style="position:relative; z-index:10;">
-            <h1>أهلاً بكم في شاليهات أشرقت</h1>
+            <h1>أهلاً بكم في أشرقت</h1>
             <p>رفاهية الإقامة في قلب مرسى مطروح</p>
         </div>
     </header>
 
     <div class="container">
-<div id="apartments" class="apartments-grid">
-                <div class="card">
+        <div id="apartments" class="apartments-grid">
+            <div class="card">
                 <img src="WhatsApp Image 2025-12-16 at 10.24.09 PM.jpeg">
                 <div class="card-body"><h3>الشقة 1</h3><ul class="features-list"><li><i class="fas fa-bed"></i> 3 غرف</li><li><i class="fas fa-snowflake"></i> مكيفة</li><li>1حمام🚽 </li> <li>تراس كبير </li></ul>
                 <div class="btn-group"><a href="gallery1.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 1')">حجز</button></div></div>
@@ -112,13 +113,14 @@
                 <div class="btn-group"><a href="gallery7.html" class="btn btn-gallery">الصور</a><button class="btn btn-book" onclick="openBooking('الشقة 7')">حجز</button></div></div>
             </div>
         </div>
+
         <section id="location" style="margin-top: 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
-    <h3 style="text-align: center; margin-bottom: 15px; font-family: 'Cairo';">موقعنا على الخريطة</h3>
-    <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3415.820684123!2d27.0704578!3d31.3831023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1456056afdff2f35%3A0xd2c744ac5aad4482!2z2LTYp9mE2YrZh9in2Kog2KfZhtiB2LHZgiDYqNmC2LHZitipINio2YTZiNmK2YrYqCDYqNmF2LHYs9mJINmF2LfZh9mI2K0!5e0!3m2!1sar!2seg!4v1710000000000!5m2!1sar!2seg" 
-        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
-    </iframe>
-</section>
+            <h3 style="text-align: center; margin-bottom: 15px; font-family: 'Cairo';">موقعنا على الخريطة</h3>
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113401.5540954067!2d27.2407421!3d31.354344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458d94819777997%3A0xc3f58e0a3f87372d!2z2YXYsdiz2Ykg2YXYt9ix2YjitI3YqNmE2YjYqNmK2KrYtA!5e0!3m2!1sar!2seg!4v1700000000000" 
+                width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
+        </section>
 
         <section class="comment-section">
             <h3 style="text-align: center; margin-bottom: 15px;">آراء النزلاء</h3>
@@ -131,24 +133,27 @@
 
     <div id="bookingModal" class="modal">
         <div class="modal-content">
-            <span onclick="closeModal()" style="float:left; cursor:pointer; font-size:24px;">&times;</span>
-            <h3 style="margin-bottom:15px;">حجز <span id="aptLabel" style="color:var(--accent)"></span></h3>
-            <form id="resForm">
-                <input type="text" id="userName" placeholder="الاسم بالكامل" required>
-                <input type="tel" id="userPhone" placeholder="رقم الموبايل" required>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                    <div><label style="font-size:0.7rem">وصول</label><input type="date" id="checkIn" required></div>
-                    <div><label style="font-size:0.7rem">مغادرة</label><input type="date" id="checkOut" required></div>
-                </div>
-                <input type="number" id="userGuests" placeholder="عدد الأفراد" required>
-                <select id="selectWa">
-                    <option value="201094778898">المسؤول 1 (898)</option>
-                    <option value="201090999381">المسؤول 2 (678)</option>
-                    <option value="201111118703">المسؤول 3 (321)</option>
-                </select>
-                <textarea id="userNotes" placeholder="أي طلبات خاصة؟" rows="2"></textarea>
-                <button type="submit" id="bookSubmitBtn" class="btn btn-book" style="width:100%;">تأكيد وإرسال واتساب</button>
-            </form>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            
+            <div id="modalBody">
+                <h3 style="margin-bottom:15px;">حجز <span id="aptLabel" style="color:var(--accent)"></span></h3>
+                <form id="resForm">
+                    <input type="text" id="userName" placeholder="الاسم بالكامل" required>
+                    <input type="tel" id="userPhone" placeholder="رقم الموبايل" required>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <div><label style="font-size:0.7rem">وصول</label><input type="date" id="checkIn" required></div>
+                        <div><label style="font-size:0.7rem">مغادرة</label><input type="date" id="checkOut" required></div>
+                    </div>
+                    <input type="number" id="userGuests" placeholder="عدد الأفراد" required>
+                    <select id="selectWa">
+                        <option value="201094778898">المسؤول 1 (898)</option>
+                        <option value="201090999381">المسؤول 2 (678)</option>
+                        <option value="201111118703">المسؤول 3 (321)</option>
+                    </select>
+                    <textarea id="userNotes" placeholder="أي طلبات خاصة؟" rows="2"></textarea>
+                    <button type="submit" id="bookSubmitBtn" class="btn btn-book" style="width:100%;">تأكيد وفحص التوافر</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -156,16 +161,14 @@
         const commentsApi = 'https://script.google.com/macros/s/AKfycbypXFwXJNF576fkFZ4ZpfQRQLNj-aJ280ViGLZpeWED2FQ3DV0cT0l9g4HbiDtX04Lk/exec';
         const bookingsApi = 'https://script.google.com/macros/s/AKfycbxDUsKIzbgO_A-zR0Ol6uIhQ4uRlLDebM6PvGcwUIpysHNZQNkvJZUg5e-00j1LI3g/exec';
 
-        // تحميل التعليقات
         function loadComments() {
             fetch(commentsApi).then(res => res.json()).then(data => {
                 document.getElementById('commentsDisplay').innerHTML = data.reverse().map(c => `
                     <div class="comment-box"><strong>${c.name}</strong><p>${c.comment}</p></div>
                 `).join('') || "كن أول من يعلق!";
-            });
+            }).catch(() => document.getElementById('commentsDisplay').innerText = "التعليقات غير متوفرة حالياً");
         }
 
-        // حفظ تعليق جديد
         function saveComment() {
             const name = document.getElementById('vName').value;
             const text = document.getElementById('vText').value;
@@ -183,105 +186,119 @@
             document.getElementById('bookingModal').style.display = 'flex';
         }
 
-     document.getElementById('resForm').onsubmit = function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('bookSubmitBtn');
-    
-    // 1. تجميع البيانات
-    const formData = {
-        apt: document.getElementById('aptLabel').innerText,
-        name: document.getElementById('userName').value,
-        phone: document.getElementById('userPhone').value,
-        cin: document.getElementById('checkIn').value,
-        cout: document.getElementById('checkOut').value,
-        guests: document.getElementById('userGuests').value,
-        wa: document.getElementById('selectWa').value,
-        notes: document.getElementById('userNotes').value
-    };
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            // إعادة ضبط المحتوى لشكل الفورم الأصلي عند الإغلاق
+            location.reload(); 
+        }
 
-    // 2. تجهيز رابط الواتساب (فتح فوري)
-    const msg = `*طلب حجز جديد*%0A*الوحدة:* ${formData.apt}%0A*الاسم:* ${formData.name}%0A*من:* ${formData.cin}%0A*إلى:* ${formData.cout}%0A*عدد الأفراد:* ${formData.guests}`;
-    const waUrl = `https://wa.me/${formData.wa}?text=${msg}`;
+        document.getElementById('resForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('bookSubmitBtn');
+            btn.disabled = true;
+            btn.innerText = "جاري فحص التواريخ...";
 
-    // 3. إرسال البيانات لجوجل شيت "في الخلفية" (بدون انتظار الرد)
-    const params = new URLSearchParams();
-    params.append('userName', formData.name);
-    params.append('userPhone', formData.phone);
-    params.append('aptName', formData.apt);
-    params.append('checkIn', formData.cin);
-    params.append('checkOut', formData.cout);
-    params.append('guests', formData.guests);
-    params.append('userNotes', formData.notes);
+            const formData = {
+                apt: document.getElementById('aptLabel').innerText,
+                name: document.getElementById('userName').value,
+                phone: document.getElementById('userPhone').value,
+                cin: document.getElementById('checkIn').value,
+                cout: document.getElementById('checkOut').value,
+                guests: document.getElementById('userGuests').value,
+                wa: document.getElementById('selectWa').value,
+                notes: document.getElementById('userNotes').value
+            };
 
-    // نستخدم fetch بدون await عشان ميعطلش فتح الواتساب
-    fetch(bookingsApi, { 
-        method: 'POST', 
-        body: params,
-        mode: 'no-cors' // دي بتخلي المتصفح ميهتمش بالرد ويعدي الطلب بسرعة
-    });
+            try {
+                const params = new URLSearchParams();
+                params.append('userName', formData.name);
+                params.append('userPhone', formData.phone);
+                params.append('aptName', formData.apt);
+                params.append('checkIn', formData.cin);
+                params.append('checkOut', formData.cout);
+                params.append('guests', formData.guests);
+                params.append('userNotes', formData.notes);
 
-    // 4. فتح الواتساب فوراً (دي هتشتغل لأنها مفيش قبلها await)
-    window.location.href = waUrl; 
-    
-    // لو حابب تفتح في صفحة جديدة بدل الحالية استخدم:
-    // window.open(waUrl, '_blank');
+                const response = await fetch(bookingsApi, { method: 'POST', body: params });
+                const result = await response.text();
 
-    alert("جاري تحويلك للواتساب لتأكيد الحجز...");
-    closeModal();
-};
+                if (result.trim() === "BUSY") {
+                    alert("⚠️ للأسف، الشقة محجوزة في هذه الفترة. جرب تاريخ آخر.");
+                    btn.disabled = false;
+                    btn.innerText = "تأكيد وإرسال عبر واتساب";
+                } else {
+                    // بيانات إنستا باي (عدلها ببياناتك)
+                    const instaPayAddress = "mohamed_ashraf_98@instapay"; 
+                    const instaPayPhone = "01094778898"; 
+
+                    const msg = `*طلب حجز جديد*%0A*الوحدة:* ${formData.apt}%0A*الاسم:* ${formData.name}%0A*من:* ${formData.cin}%0A*إلى:* ${formData.cout}%0A*جارِ تحويل العربون عبر إنستا باي*`;
+                    const waUrl = `https://wa.me/${formData.wa}?text=${msg}`;
+                    
+                    // استبدال محتوى المودال ببيانات الدفع
+                    document.getElementById('modalBody').innerHTML = `
+                        <div style="text-align:center; padding:10px;">
+                            <h3 style="color:green;">✅ التواريخ متاحة</h3>
+                            <p style="font-size:0.9rem; margin-bottom:15px;">تم تسجيل طلبك مبدئياً، يرجى دفع العربون للتأكيد:</p>
+                            
+                            <div style="background:#f0f7ff; padding:15px; border-radius:15px; border:1px dashed var(--primary); margin-bottom:20px;">
+                                <p style="margin-bottom:5px;">عنوان InstaPay (IPA):</p>
+                                <strong style="font-size:1.1rem; color:var(--primary); display:block; margin-bottom:10px;">${instaPayAddress}</strong>
+                                <p style="margin-bottom:5px;">أو رقم الهاتف:</p>
+                                <strong style="font-size:1.1rem; color:var(--primary);">${instaPayPhone}</strong>
+                            </div>
+                            
+                            <p style="font-size:0.8rem; color:#666; margin-bottom:15px;">بعد التحويل، اضغط على الزرار بالأسفل لإرسال صورة الإيصال للمسؤول.</p>
+
+                            <a href="${waUrl}" target="_blank" class="btn btn-book" style="display:block; background:#25d366; text-decoration:none;">
+                                <i class="fab fa-whatsapp"></i> إرسال الإيصال واتساب
+                            </a>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                alert("حدث خطأ في الاتصال. سيتم تحويلك للواتساب للمتابعة.");
+                window.open(`https://wa.me/${formData.wa}?text=فشل في الفحص التلقائي، أود الاستفسار عن حجز ${formData.apt}`, '_blank');
+                btn.disabled = false;
+            }
+        };
 
         loadComments();
     </script>
+
     <footer style="background: #1a1a1a; color: white; padding: 60px 5% 20px; margin-top: 50px; border-top: 5px solid var(--accent); direction: rtl;">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
-        
-        <div style="text-align: right;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                <img src="WhatsApp Image 2025-12-16 at 9.59.08 PM.jpeg" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--accent);">
-                <h2 style="color: var(--accent); font-size: 1.6rem;">شاليهات أشرقت</h2>
-            </div>
-            <p style="color: #aaa; font-size: 0.95rem; line-height: 1.7;">إقامة فندقية فاخرة في قرية بلوبيتش بمرسى مطروح. استمتع بالخصوصية والراحة مع عائلتك في أرقى الشاليهات المطلة على البحر.</p>
-        </div>
-
-        <div style="text-align: right;">
-            <h3 style="margin-bottom: 20px; color: var(--accent); font-size: 1.2rem;">روابط سريعة</h3>
-            <ul style="list-style: none; padding: 0;">
-                <li style="margin-bottom: 12px;"><a href="#" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-home" style="font-size: 0.8rem;"></i> الرئيسية</a></li>
-                
-                <li style="margin-bottom: 12px;"><a href="#apartments" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-door-open" style="font-size: 0.8rem;"></i> الشقق المتوفرة</a></li>
-                
-                <li style="margin-bottom: 12px;"><a href="#location" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-map-marked-alt" style="font-size: 0.8rem;"></i> موقعنا على الخريطة</a></li>
-            </ul>
-        </div>
-
-        <div style="text-align: right;">
-            <h3 style="margin-bottom: 20px; color: var(--accent); font-size: 1.2rem;">تواصل معنا</h3>
-            <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
-                <a href="https://wa.me/201094778898" target="_blank" style="color: #ccc; text-decoration: none;"><i class="fab fa-whatsapp" style="color: #25d366; margin-left: 10px;"></i> 01094778898</a>
-                <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3415.820684123!2d27.0704578!3d31.3831023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1456056afdff2f35%3A0xd2c744ac5aad4482!2z2LTYp9mE2YrZh9in2Kog2KfZhtiB2LHZgiDYqNmC2LHZitipINio2YTZiNmK2YrYqCDYqNmF2LHYs9mJINmF2LfZh9mI2K0!5e0!3m2!1sar!2seg!4v1710000000000!5m2!1sar!2seg" target="_blank" style="color: #ccc; text-decoration: none;"><i class="fas fa-location-arrow" style="color: #ff5722; margin-left: 10px;"></i> قرية بلوبيتش - مطروح</a>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto;">
+            <div style="text-align: right;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <img src="WhatsApp Image 2025-12-16 at 9.59.08 PM.jpeg" style="width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--accent);">
+                    <h2 style="color: var(--accent); font-size: 1.6rem;">شاليهات أشرقت</h2>
+                </div>
+                <p style="color: #aaa; font-size: 0.95rem; line-height: 1.7;">إقامة فندقية فاخرة في قرية بلوبيتش بمرسى مطروح. استمتع بالخصوصية والراحة مع عائلتك في أرقى الشاليهات المطلة على البحر.</p>
             </div>
 
-            <div style="display: flex; gap: 15px;">
-                <a href="https://www.facebook.com/share/1DgJ7wAaCg/" target="_blank" title="تابعنا على فيسبوك" 
-                   style="background: #1877f2; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; transform: scale(1);"
-                   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                
-                <a href="https://wa.me/201094778898" target="_blank" title="تواصل عبر واتساب"
-                   style="background: #25d366; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;"
-                   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
+            <div style="text-align: right;">
+                <h3 style="margin-bottom: 20px; color: var(--accent); font-size: 1.2rem;">روابط سريعة</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-home" style="font-size: 0.8rem;"></i> الرئيسية</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#apartments" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-door-open" style="font-size: 0.8rem;"></i> الشقق المتوفرة</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#location" style="color: #ccc; text-decoration: none; display: flex; align-items: center; gap: 8px;"><i class="fas fa-map-marked-alt" style="font-size: 0.8rem;"></i> موقعنا على الخريطة</a></li>
+                </ul>
+            </div>
+
+            <div style="text-align: right;">
+                <h3 style="margin-bottom: 20px; color: var(--accent); font-size: 1.2rem;">تواصل معنا</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px;">
+                    <a href="https://wa.me/201094778898" target="_blank" style="color: #ccc; text-decoration: none;"><i class="fab fa-whatsapp" style="color: #25d366; margin-left: 10px;"></i> 01094778898</a>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <a href="https://www.facebook.com/share/1DgJ7wAaCg/" target="_blank" style="background: #1877f2; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
             </div>
         </div>
-
-    </div>
-
-    <div style="border-top: 1px solid #333; margin-top: 40px; padding-top: 20px; text-align: center; color: #666; font-size: 0.85rem;">
-        <p>جميع الحقوق محفوظة &copy; 2026 شاليهات أشرقت</p>
-    </div>
-</footer>
+        <div style="border-top: 1px solid #333; margin-top: 40px; padding-top: 20px; text-align: center; color: #666; font-size: 0.85rem;">
+            <p>جميع الحقوق محفوظة © 2026 شاليهات أشرقت</p>
+        </div>
+    </footer>
 </body>
 </html>
-
