@@ -183,15 +183,11 @@
             document.getElementById('bookingModal').style.display = 'flex';
         }
 
-        function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
-
-        // إرسال الحجز
-        document.getElementById('resForm').onsubmit = async function(e) {
+     document.getElementById('resForm').onsubmit = function(e) {
     e.preventDefault();
     const btn = document.getElementById('bookSubmitBtn');
-    btn.disabled = true; 
-    btn.innerText = "جاري فحص التواريخ...";
-
+    
+    // 1. تجميع البيانات
     const formData = {
         apt: document.getElementById('aptLabel').innerText,
         name: document.getElementById('userName').value,
@@ -203,49 +199,35 @@
         notes: document.getElementById('userNotes').value
     };
 
-    try {
-        // تجهيز البيانات للإرسال
-        const params = new URLSearchParams();
-        params.append('userName', formData.name);
-        params.append('userPhone', formData.phone);
-        params.append('aptName', formData.apt);
-        params.append('checkIn', formData.cin);
-        params.append('checkOut', formData.cout);
-        params.append('guests', formData.guests);
-        params.append('userNotes', formData.notes);
+    // 2. تجهيز رابط الواتساب (فتح فوري)
+    const msg = `*طلب حجز جديد*%0A*الوحدة:* ${formData.apt}%0A*الاسم:* ${formData.name}%0A*من:* ${formData.cin}%0A*إلى:* ${formData.cout}%0A*عدد الأفراد:* ${formData.guests}`;
+    const waUrl = `https://wa.me/${formData.wa}?text=${msg}`;
 
-        // إرسال الطلب للشيت وانتظار الرد (بدون no-cors عشان نقدر نقرأ النتيجة)
-        const response = await fetch(bookingsApi, { 
-            method: 'POST', 
-            body: params 
-        });
-        
-        const result = await response.text();
+    // 3. إرسال البيانات لجوجل شيت "في الخلفية" (بدون انتظار الرد)
+    const params = new URLSearchParams();
+    params.append('userName', formData.name);
+    params.append('userPhone', formData.phone);
+    params.append('aptName', formData.apt);
+    params.append('checkIn', formData.cin);
+    params.append('checkOut', formData.cout);
+    params.append('guests', formData.guests);
+    params.append('userNotes', formData.notes);
 
-        // لو الشيت رد بكلمة BUSY
-        if (result === "BUSY") {
-            alert("⚠️ عذراً، هذه الشقة محجوزة بالفعل في التواريخ المختارة. يرجى اختيار تاريخ آخر.");
-            btn.disabled = false;
-            btn.innerText = "تأكيد وإرسال عبر واتساب";
-            return; // وقف الكود هنا وم تفتحش واتساب
-        }
+    // نستخدم fetch بدون await عشان ميعطلش فتح الواتساب
+    fetch(bookingsApi, { 
+        method: 'POST', 
+        body: params,
+        mode: 'no-cors' // دي بتخلي المتصفح ميهتمش بالرد ويعدي الطلب بسرعة
+    });
 
-        // لو الرد SUCCESS أو أي حاجة تانية، كمل للواتساب
-        const msg = `*طلب حجز جديد*%0A*الوحدة:* ${formData.apt}%0A*الاسم:* ${formData.name}%0A*من:* ${formData.cin}%0A*إلى:* ${formData.cout}%0A*عدد الأفراد:* ${formData.guests}`;
-        window.open(`https://wa.me/${formData.wa}?text=${msg}`, '_blank');
+    // 4. فتح الواتساب فوراً (دي هتشتغل لأنها مفيش قبلها await)
+    window.location.href = waUrl; 
+    
+    // لو حابب تفتح في صفحة جديدة بدل الحالية استخدم:
+    // window.open(waUrl, '_blank');
 
-        alert("✅ تم تسجيل طلبك وتحويلك للمسؤول لتأكيد الحجز.");
-        closeModal();
-
-    } catch (err) {
-        // لو حصل مشكلة في الربط، افتح واتساب كحل احتياطي
-        console.error("Error:", err);
-        const msg = `*طلب حجز (خارج النظام)*%0A*الوحدة:* ${formData.apt}%0A*الاسم:* ${formData.name}%0A*من:* ${formData.cin}%0A*إلى:* ${formData.cout}`;
-        window.open(`https://wa.me/${formData.wa}?text=${msg}`, '_blank');
-    } finally {
-        btn.disabled = false;
-        btn.innerText = "تأكيد وإرسال عبر واتساب";
-    }
+    alert("جاري تحويلك للواتساب لتأكيد الحجز...");
+    closeModal();
 };
 
         loadComments();
@@ -302,4 +284,3 @@
 </footer>
 </body>
 </html>
-
